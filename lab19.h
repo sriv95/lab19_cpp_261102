@@ -124,3 +124,38 @@ void playerLose(){
 	cout << "*                                                     *\n";
 	cout << "*******************************************************\n";
 };
+
+bool Unit::isDead(){
+    if(hp>0) return false;
+    else return true;
+}
+
+void Unit::guard(){
+    guard_on = true;
+}
+
+int Unit::beAttacked(int oppatk){
+    if(guard_on) {
+        hp-=(oppatk-def)/3;
+        return (oppatk-def)/3;
+    }
+    else {
+        hp-=oppatk-def;
+        return oppatk-def;
+    }
+}
+
+int Unit::attack(Unit &u){
+	return u.beAttacked(atk);
+}
+
+int Unit::heal(){
+    int heal = (rand()%21) + 10;
+    if(hp+heal>=hpmax){
+        heal=hpmax-hp;
+        hp=hpmax;
+    }else {
+        hp+=heal;
+    }
+    return heal;
+}
